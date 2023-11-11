@@ -6,9 +6,9 @@ public class Client
     [Key]
     public int Id { get; set; }
 
-    public string? ArabicName { get; set; }
+    public string? ArName { get; set; }
     [Required]
-    public string? EnglishName { get; set; }
+    public string? EnName { get; set; }
     [Url]
     public string? Website { get; set; }
     [Phone]
@@ -16,5 +16,5 @@ public class Client
     public string? City { get; set; }
     public ICollection<Contact>? Contacts { get; set; }
 
-    public override string ToString() => $"Id: {Id}, Arabic Name: {ArabicName}, English Name: {EnglishName}, Website: {Website}, Phone: {Phone}, City: {City}";
+    public override string ToString() => $"Id: {Id}, Arabic Name: {ArName}, English Name: {EnName}, Website: {Website}, Phone: {Phone}, City: {City}";
 }

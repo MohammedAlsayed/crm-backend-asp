@@ -16,8 +16,8 @@ namespace CRM.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    ArabicName = table.Column<string>(type: "TEXT", nullable: true),
-                    EnglishName = table.Column<string>(type: "TEXT", nullable: false),
+                    ArName = table.Column<string>(type: "TEXT", nullable: true),
+                    EnName = table.Column<string>(type: "TEXT", nullable: false),
                     Website = table.Column<string>(type: "TEXT", nullable: true),
                     Phone = table.Column<string>(type: "TEXT", nullable: true),
                     City = table.Column<string>(type: "TEXT", nullable: true)
@@ -47,9 +47,9 @@ namespace CRM.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    DoctorEnName = table.Column<string>(type: "TEXT", nullable: false),
-                    DoctorArName = table.Column<string>(type: "TEXT", nullable: true),
-                    DoctorGrade = table.Column<string>(type: "TEXT", nullable: true),
+                    EnName = table.Column<string>(type: "TEXT", nullable: false),
+                    ArName = table.Column<string>(type: "TEXT", nullable: true),
+                    Grade = table.Column<string>(type: "TEXT", nullable: true),
                     Email = table.Column<string>(type: "TEXT", nullable: true),
                     Department = table.Column<string>(type: "TEXT", nullable: true),
                     Phone = table.Column<string>(type: "TEXT", nullable: true),

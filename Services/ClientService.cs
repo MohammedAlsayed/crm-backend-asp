@@ -1,64 +1,50 @@
+using CRM.Data;
 using CRM.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CRM.Services;
 
-public static class ClientService
+public class ClientService
 {
-    static List<Client> Clients { get; }
-    static int nextId = -1;
-    static ClientService()
-    {   
-        // Clients = ReadCSV("./DB/Client_Accounts.csv");
-    }
-
-    // static List<Client> ReadCSV(string filePath)
-    // {
-    //     List<Client> clients = new List<Client>();
-    //     try
-    //     {
-    //         using (StreamReader reader = new StreamReader(filePath))
-    //         {   
-    //             // skip the first line
-    //             reader.ReadLine();
-    //             while (!reader.EndOfStream)
-    //             {
-    //                 string line = reader.ReadLine();
-    //                 string[] values = line.Split(',');
-
-    //                 int id = int.Parse(values[1].Substring(values[1].Length - 3));
-    //                 nextId = id > nextId ? id : nextId;
-    //                 string arabicName = values[2];
-    //                 string englishName = values[3];
-    //                 string website = values[4];
-    //                 string phone = values[5];
-    //                 string city = values[7];
-
-    //                 Client client = new Client(id, arabicName, englishName, website, phone, city, null);
-    //                 clients.Add(client);
-    //             }
-    //             nextId++;
-    //         }
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         Console.WriteLine($"Error reading CSV file: {ex.Message}");
-    //     }
-
-    //     return clients;
-    // }
-
-    public static int GetNextId() => nextId;
-
-    public static List<Client> GetAll() => Clients;
-    
-    public static Client? Get(int id) => Clients.FirstOrDefault(p => p.Id == id);
-
-    public static void Add(Client client)
+    private readonly CrmContext _context;
+    public ClientService(CrmContext context)
     {
-        client.Id = nextId++;
-        Clients.Add(client);
-        
+        _context = context;
     }
 
-    public static List<string> SearchEnNames(string name) => Clients.Where(c => c.EnglishName.ToLower().Contains(name.ToLower())).Select(c => c.EnglishName).ToList();
+    public List<Client> GetAll()
+    {
+        return _context.Clients.AsNoTracking().ToList();
+    }
+    
+    public Client? GetById(int id)
+    {
+        return _context.Clients
+            .Include(p => p.Contacts)
+            .AsNoTracking()
+            .SingleOrDefault(p => p.Id == id);
+    }
+
+    public Client Create(Client newClient)
+    {
+        _context.Clients.Add(newClient);
+        _context.SaveChanges();
+
+        return newClient;
+    }
+
+    public int GetNextId()
+    {
+        return _context.Clients.Max(c => c.Id) + 1;
+    }  
+
+    // search by name and return name and id only for now 
+    public IEnumerable<Object> SearchEnNames(string name) 
+    {
+        return _context.Clients
+            .Where(c => c.EnName.ToLower().Contains(name.ToLower()))
+            .Select(c => new { Id = c.Id, EnName = c.EnName }).ToList();
+    } 
+
+    // public List<string?> SearchEnNames(string name) => _context.Clients.Where(c => c.EnName.ToLower().Contains(name.ToLower())).Select(c => new {c.Id, c.EnName}).ToList();
 }

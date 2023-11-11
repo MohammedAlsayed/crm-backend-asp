@@ -1,9 +1,14 @@
 using CRM.Data;
+using CRM.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add DB context
 builder.Services.AddSqlite<CrmContext>("Data Source='crm.db'");
+
+// Add services
+builder.Services.AddScoped<ClientService>();
+builder.Services.AddScoped<ContactService>();
 
 // Add CORS policy
 builder.Services.AddCors(options =>
@@ -24,6 +29,8 @@ builder.Services.AddSwaggerGen();
 
 
 var app = builder.Build();
+
+app.CreateDbIfNotExists();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

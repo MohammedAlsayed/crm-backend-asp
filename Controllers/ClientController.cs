@@ -8,20 +8,22 @@ namespace CRM.Controllers;
 [Route("api/[controller]")]
 public class ClientController : ControllerBase
 {
-    public ClientController()
+    ClientService _service;
+    public ClientController(ClientService service)
     {
+        _service = service;
     }
 
     // GET all action
     [HttpGet]
     public ActionResult<List<Client>> GetAll() =>
-        ClientService.GetAll();
+        _service.GetAll();
     
     // GET by Id action
     [HttpGet("{id}")]
     public ActionResult<Client> Get(int id)
     {
-        var client = ClientService.Get(id);
+        var client = _service.GetById(id);
 
         if(client == null)
             return NotFound();
@@ -31,28 +33,25 @@ public class ClientController : ControllerBase
     
     [HttpGet("nextId/")]
     public ActionResult<int> NextId() =>
-        ClientService.GetNextId();
+        _service.GetNextId();
 
     // POST action
     [HttpPost]
     public IActionResult Create(Client client)
-    {
-        // write to console client object
-        Console.WriteLine(client);
-        
-        ClientService.Add(client);
+    {   
+        _service.Create(client);
         return CreatedAtAction(nameof(Create), new { id = client.Id }, client);
     }
 
-    [HttpGet("searchIds/{name}")]
-    public ActionResult<List<string>> SearchIds(string name)
+    [HttpGet("searchNames/{name}")]
+    public ActionResult<Object> SearchNames(string name)
     {
-        var names = ClientService.SearchEnNames(name);
+        var names = _service.SearchEnNames(name);
 
         if(names == null)
             return NotFound();
 
-        return names;
+        return Ok(names);
     }
 
     // PUT action

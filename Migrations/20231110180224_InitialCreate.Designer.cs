@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRM.Migrations
 {
     [DbContext(typeof(CrmContext))]
-    [Migration("20231110173123_InitialCreate")]
+    [Migration("20231110180224_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -26,13 +26,13 @@ namespace CRM.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ArabicName")
+                    b.Property<string>("ArName")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("City")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("EnglishName")
+                    b.Property<string>("EnName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -53,23 +53,23 @@ namespace CRM.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("ArName")
+                        .HasColumnType("TEXT");
+
                     b.Property<int?>("ClientId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Department")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("DoctorArName")
+                    b.Property<string>("Email")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("DoctorEnName")
+                    b.Property<string>("EnName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("DoctorGrade")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Email")
+                    b.Property<string>("Grade")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Phone")

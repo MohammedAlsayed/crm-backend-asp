@@ -37,3 +37,6 @@ dist/
 out/
 
 crm.db
+DB/
+crm.db-shm
+crm.db-wal
