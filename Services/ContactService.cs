@@ -42,7 +42,7 @@ public class ContactService
             return true;
         }
 
-        throw new InvalidOperationException("Contact does not exist");
+        return false;
     }
 
 }

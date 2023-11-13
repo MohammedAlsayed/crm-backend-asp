@@ -1,6 +1,8 @@
+using System.Text;
 using CRM.Data;
 using CRM.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Web;
 
 namespace CRM.Services;
 
@@ -32,9 +34,10 @@ public class ClientService
 
     // search by name and return name and id only for now 
     public IEnumerable<Object> SearchEnNames(string name) 
-    {
+    {   
+        var decodedName = HttpUtility.UrlDecode(name, Encoding.UTF8);
         return _context.Clients
-            .Where(c => c.EnName.ToLower().Contains(name.ToLower()))
+            .Where(c => c.EnName.ToLower().Contains(decodedName.ToLower()))
             .Select(c => new { Id = c.Id, EnName = c.EnName }).ToList();
     } 
 
