@@ -25,14 +25,6 @@ public class ClientService
             .SingleOrDefault(p => p.Id == id);
     }
 
-    public Client Create(Client newClient)
-    {
-        _context.Clients.Add(newClient);
-        _context.SaveChanges();
-
-        return newClient;
-    }
-
     public int GetNextId()
     {
         return _context.Clients.Max(c => c.Id) + 1;
@@ -45,6 +37,35 @@ public class ClientService
             .Where(c => c.EnName.ToLower().Contains(name.ToLower()))
             .Select(c => new { Id = c.Id, EnName = c.EnName }).ToList();
     } 
+
+    public Client Create(Client newClient)
+    {
+        _context.Clients.Add(newClient);
+        _context.SaveChanges();
+
+        return newClient;
+    }
+
+    public Client Update(Client updateClient)
+    {
+        _context.Clients.Update(updateClient);
+        _context.SaveChanges();
+        return updateClient;
+    }
+
+    public bool DeleteById(int id)
+    {
+        var client = _context.Clients.Find(id);
+        if (client is not null)
+        {
+            _context.Clients.Remove(client);
+            _context.SaveChanges();
+            return true;
+        }
+
+        return false;
+    }
+
 
     // public List<string?> SearchEnNames(string name) => _context.Clients.Where(c => c.EnName.ToLower().Contains(name.ToLower())).Select(c => new {c.Id, c.EnName}).ToList();
 }
