@@ -17,7 +17,7 @@ public class ContactController : ControllerBase
     // POST action
     [HttpPost]
     public IActionResult Create(Contact contact)
-    {
+    {   
         _service.Create(contact);
         return CreatedAtAction(nameof(Create), new { id = contact.Id }, contact);
     }
@@ -34,6 +34,20 @@ public class ContactController : ControllerBase
             return NotFound();
 
         _service.Update(contact);
+
+        return NoContent();
+    }
+
+     // DELETE action
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
+    {
+        var existingContact = _service.GetById(id);
+
+        if (existingContact is null)
+            return NotFound();
+
+        _service.DeleteById(id);
 
         return NoContent();
     }

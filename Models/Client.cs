@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace CRM.Models;
 public class Client
@@ -14,6 +15,7 @@ public class Client
     [Phone]
     public string? Phone { get; set; }
     public string? City { get; set; }
+
     public ICollection<Contact>? Contacts { get; set; }
 
     public override string ToString() => $"Id: {Id}, Arabic Name: {ArName}, English Name: {EnName}, Website: {Website}, Phone: {Phone}, City: {City}";

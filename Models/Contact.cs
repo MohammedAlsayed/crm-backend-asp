@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace CRM.Models;
 public class Contact
@@ -19,7 +20,7 @@ public class Contact
     
     [ForeignKey(nameof(Client))]
     public int ClientId { get; set; }
-
+    
     // override to string method
-    public override string ToString() => $"EnName: {EnName}, ArName: {ArName}, Grade: {Grade}, Email: {Email}, Department: {Department}, Phone: {Phone}, ClientId: {ClientId}";
+    public override string ToString() => $"EnName: {EnName}, ArName: {ArName}, Grade: {Grade}, Email: {Email}, Department: {Department}, Phone: {Phone}";
 }

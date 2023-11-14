@@ -53,7 +53,7 @@ namespace CRM.Migrations
                     Email = table.Column<string>(type: "TEXT", nullable: true),
                     Department = table.Column<string>(type: "TEXT", nullable: true),
                     Phone = table.Column<string>(type: "TEXT", nullable: true),
-                    ClientId = table.Column<int>(type: "INTEGER", nullable: true)
+                    ClientId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,7 +62,8 @@ namespace CRM.Migrations
                         name: "FK_Contacts_Clients_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Clients",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
